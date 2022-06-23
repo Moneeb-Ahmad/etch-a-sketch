@@ -1,6 +1,35 @@
-.container{
+body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 400px;
+  min-height: 400px;
+  max-height: 400px;
+  max-width: 400px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.gridChooser {
+  background-color: pink;
+  color: Green;
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: 18px;
+  border: 2px;
+  border-style: solid;
+  border-color: black;
+  margin-top: 8px;
+  padding: 4px 32px;
+  margin-bottom: 2%;
 }
