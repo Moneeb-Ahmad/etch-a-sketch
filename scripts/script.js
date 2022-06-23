@@ -1,8 +1,14 @@
 const container = document.querySelector('.container');
 const sizeSelector = document.querySelector('.gridChooser');
 const resetGrid = document.querySelector('.reset');
+const rgbMode = document.querySelector('.rgb');
+const normalMode = document.querySelector('.normal');
+
+let rgb = false;
 let width = container.offsetWidth
 let oldColor = "#000000";
+let n = 16;
+
 const colorHashSet = {
   'rgb(255, 191, 204)': "#e6acb8",
   'rgb(230, 172, 184)': "#cc99a3",
@@ -16,7 +22,7 @@ const colorHashSet = {
   'rgb(25, 19, 20)': "#000000",
   'rgb(0, 0, 0)': "#000000"
 };
-let n = 16;
+
 
 createGrid(n);
 
@@ -65,10 +71,11 @@ function applyDivStyleGeneral(div) {
 
 function applyDivStyleHover(div) {
   let height = Math.floor(width / n)
-  oldColor = window.getComputedStyle(div, null).
-  getPropertyValue('background-color');
   let randomColor = Math.floor(Math.random() * 16777215).
   toString(16);
+  oldColor = rgb ? `#${randomColor}` : window.
+  getComputedStyle(div, null).
+  getPropertyValue('background-color');
   div.setAttribute(
     'style',
     `display: flex;
@@ -84,7 +91,7 @@ function applyDivStyleHover(div) {
 
 function applyDivStyleHoverOff(div) {
   let height = Math.floor(width / n)
-  let newColor = colorHashSet[oldColor];
+  let newColor = rgb ? oldColor : colorHashSet[oldColor];
   div.setAttribute(
     'style',
     `display: flex;
@@ -140,5 +147,21 @@ function reset() {
   createGrid(n);
 }
 
+function enableRGB() {
+  if (!rgb) {
+    rgb = true;
+    createGrid(n);
+  }
+}
+
+function disableRGB() {
+  if (rgb) {
+    rgb = false;
+    createGrid(n);
+  }
+}
+
 sizeSelector.addEventListener('click', changeSize);
 resetGrid.addEventListener('click', reset);
+rgbMode.addEventListener('click', enableRGB);
+normalMode.addEventListener('click', disableRGB);
