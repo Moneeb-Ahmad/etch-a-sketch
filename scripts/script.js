@@ -1,6 +1,21 @@
 const container = document.querySelector('.container');
 const sizeSelector = document.querySelector('.gridChooser');
+const resetGrid = document.querySelector('.reset');
 let width = container.offsetWidth
+let oldColor = "#000000";
+const colorHashSet = {
+  'rgb(255, 191, 204)': "#e6acb8",
+  'rgb(230, 172, 184)': "#cc99a3",
+  'rgb(204, 153, 163)': "#b3868f",
+  'rgb(179, 134, 143)': "#99737a",
+  'rgb(153, 115, 122)': "#806066",
+  'rgb(128, 96, 102)': "#664d52",
+  'rgb(102, 77, 82)': "#4d393d",
+  'rgb(77, 57, 61)': "#332628",
+  'rgb(51, 38, 40)': "#191314",
+  'rgb(25, 19, 20)': "#000000",
+  'rgb(0, 0, 0)': "#000000"
+};
 let n = 16;
 
 createGrid(n);
@@ -41,7 +56,7 @@ function applyDivStyleGeneral(div) {
     border-width: 1px;
     border-style: solid;
     border-color: black;
-    background-color: pink;
+    background-color: #ffbfcc;
     box-sizing: border-box;
     width: ${width}px;
     height: ${height}px;`
@@ -50,6 +65,10 @@ function applyDivStyleGeneral(div) {
 
 function applyDivStyleHover(div) {
   let height = Math.floor(width / n)
+  oldColor = window.getComputedStyle(div, null).
+  getPropertyValue('background-color');
+  let randomColor = Math.floor(Math.random() * 16777215).
+  toString(16);
   div.setAttribute(
     'style',
     `display: flex;
@@ -57,7 +76,23 @@ function applyDivStyleHover(div) {
     border-style: solid;
     border-color: black;
     box-sizing: border-box;
-    background-color: blue;
+    background-color: #${randomColor};
+    width: ${width}px;
+    height: ${height}px;`
+  );
+}
+
+function applyDivStyleHoverOff(div) {
+  let height = Math.floor(width / n)
+  let newColor = colorHashSet[oldColor];
+  div.setAttribute(
+    'style',
+    `display: flex;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    background-color: ${newColor};
+    box-sizing: border-box;
     width: ${width}px;
     height: ${height}px;`
   );
@@ -86,7 +121,7 @@ function mouseHover(e) {
 }
 
 function mouseOff(e) {
-  applyDivStyleGeneral(e.target);
+  applyDivStyleHoverOff(e.target);
 }
 
 function changeSize(e) {
@@ -101,5 +136,9 @@ function changeSize(e) {
   }
 }
 
+function reset() {
+  createGrid(n);
+}
 
 sizeSelector.addEventListener('click', changeSize);
+resetGrid.addEventListener('click', reset);
