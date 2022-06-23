@@ -1,0 +1,30 @@
+const container = document.querySelector('.container');
+console.log(createGrid(8));
+
+function createGrid(size) {
+  let n = size;
+  for (let i = 0; i < n; i++) {
+    const row = document.createElement('div');
+    row.setAttribute(
+      'style',
+      `display: flex;`
+    );
+    for (let j = 0; j < n; j++) {
+      const div = document.createElement('div');
+      applyDivStyleGeneral(div);
+      row.appendChild(div);
+    }
+    container.appendChild(row);
+  }
+}
+
+function applyDivStyleGeneral(div) {
+  div.setAttribute(
+    'style',
+    `border-style: solid;
+    border-color: black;
+    background-color: pink;
+    width: 50px;
+    height: 50px;`
+  );
+}
